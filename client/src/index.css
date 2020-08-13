@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.Jumbo {
+  background: #343a40 !important;
+  margin-top: 1rem;
+  padding: 1rem 1rem !important;
+}

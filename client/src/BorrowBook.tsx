@@ -1,24 +1,17 @@
 import React from 'react';
-import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, OverlayTrigger, Popover, Table } from 'react-bootstrap';
 import axios from 'axios';
 
 const ROOT_URL = 'http://localhost:8000';
 
 interface BorrowBookProps {
   user: any;
+  handleReturn: Function;
 }
 
-interface BorrowBookState {
-  user: any;
-}
-
-class BorrowBook extends React.Component<BorrowBookProps, BorrowBookState> {
+class BorrowBook extends React.Component<BorrowBookProps, {}> {
   public constructor(props: BorrowBookProps) {
     super(props);
-    this.state = {
-      user: null
-    };
   }
 
   public render() {
@@ -30,13 +23,30 @@ class BorrowBook extends React.Component<BorrowBookProps, BorrowBookState> {
           <Popover id="popover-positioned-bottom">
             <Popover.Content>
               {this.props.user?.borrowedbooks.length ? (
-                this.props.user?.borrowedbooks.map((e: any, i: number) => {
-                  return (
-                    <div key={i}>
-                      <strong>{e.title}</strong>
-                    </div>
-                  );
-                })
+                <Table bordered hover>
+                  <tbody>
+                    {this.props.user?.borrowedbooks.map((book: any) => {
+                      return (
+                        <tr key={book.title}>
+                          <td>
+                            <strong>{book.title}</strong>
+                          </td>
+                          <td>
+                            <Button
+                              variant="secondary"
+                              size="sm"
+                              onClick={() => {
+                                this.props.handleReturn(book);
+                              }}
+                            >
+                              Return
+                            </Button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </Table>
               ) : (
                 <strong>No books</strong>
               )}

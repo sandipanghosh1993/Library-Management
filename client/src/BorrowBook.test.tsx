@@ -5,7 +5,10 @@ import BorrowBook from './BorrowBook';
 describe('BorrowBook', () => {
   beforeEach(() => {
     render(
-      <BorrowBook user={{ borrowedbooks: [{ title: 'XYZ', author: 'abc' }] }} />
+      <BorrowBook
+        user={{ borrowedbooks: [{ title: 'XYZ', author: 'abc' }] }}
+        handleReturn={() => {}}
+      />
     );
   });
 
@@ -19,5 +22,6 @@ describe('BorrowBook', () => {
       fireEvent.click(screen.getByRole('button'));
     });
     expect(screen.getByText('XYZ')).toBeInTheDocument();
+    expect(screen.getByText('Return')).toBeInTheDocument();
   });
 });

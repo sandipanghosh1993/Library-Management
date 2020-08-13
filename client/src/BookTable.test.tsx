@@ -10,7 +10,12 @@ describe('BookTable', () => {
         { title: 'Ulysses', author: 'James Joyce' }
       ];
       render(
-        <BookTable books={books} disabled={false} handleBorrow={() => {}} />
+        <BookTable
+          books={books}
+          disabled={false}
+          handleBorrow={() => {}}
+          borrowedbook={{}}
+        />
       );
     });
 
@@ -35,7 +40,7 @@ describe('BookTable', () => {
     beforeEach(() => {
       const books: any = [];
       render(
-        <BookTable books={books} disabled={false} handleBorrow={() => {}} />
+        <BookTable books={books} disabled={false} borrowedbook={{}} handleBorrow={() => {}} />
       );
     });
 

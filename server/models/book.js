@@ -13,13 +13,14 @@ const bookSchema = new mongoose.Schema({
   },
   noofcopy: {
     type: Number,
-    require: true
+    require: true,
+    default: 1
   }
 });
 
 const Book = mongoose.model('Book', bookSchema);
 
-const findAllBook = (response, user = null) => {
+const findAllBooks = (response, user = null) => {
   Book.find({}, (err, books) => {
     if(err) {
       response.status(500).send('Error while fetching book');
@@ -32,4 +33,4 @@ const findAllBook = (response, user = null) => {
   });
 }
 
-module.exports = {Book, bookSchema, findAllBook};
+module.exports = {Book, bookSchema, findAllBooks};

@@ -1,15 +1,12 @@
 import React from 'react';
-import { Button, OverlayTrigger, Popover, Col } from 'react-bootstrap';
+import { Button, Popover, Col } from 'react-bootstrap';
 import BookTable from './BookTable';
 import Login from './Login';
 import BorrowBook from './BorrowBook';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import axios from 'axios';
 
 const ROOT_URL = 'http://localhost:8000';
-
-interface AppProps {}
 
 interface AppState {
   books: any[];
@@ -18,8 +15,8 @@ interface AppState {
   user: any;
 }
 
-class App extends React.Component<AppProps, AppState> {
-  public constructor(props: AppProps) {
+class App extends React.Component<{}, AppState> {
+  public constructor(props: any) {
     super(props);
     this.state = {
       books: [],
@@ -30,16 +27,14 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   public async fetchBooks() {
-    if (!this.state.renderTable) {
-      try {
-        const response: any = await axios.get(ROOT_URL + '/books');
-        this.setState({
-          books: response.data.books,
-          renderTable: true
-        });
-      } catch (err) {
-        console.error(err);
-      }
+    try {
+      const response: any = await axios.get(ROOT_URL + '/books');
+      this.setState({
+        books: response.data.books,
+        renderTable: true
+      });
+    } catch (err) {
+      console.error(err);
     }
   }
 
@@ -50,6 +45,21 @@ class App extends React.Component<AppProps, AppState> {
   public async handleBorrow(book: any) {
     try {
       const response: any = await axios.post(ROOT_URL + '/borrow', {
+        userId: this.state.user.userId,
+        book
+      });
+      this.setState({
+        books: response.data.books,
+        user: response.data.user
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  public async handleReturn(book: any) {
+    try {
+      const response: any = await axios.post(ROOT_URL + '/return', {
         userId: this.state.user.userId,
         book
       });
@@ -79,16 +89,23 @@ class App extends React.Component<AppProps, AppState> {
               >
                 Display Available Books
               </Button>{' '}
-              <BorrowBook user={this.state.user} />
+              <BorrowBook
+                user={this.state.user}
+                handleReturn={this.handleReturn.bind(this)}
+              />
             </Col>
           </React.Fragment>
         )}
         {this.state.renderTable ? (
           <BookTable
-            disabled={this.state.user.borrowedbooks.length === 2}
+            disabled={this.state.user.borrowedbooks.length >= 2}
             books={this.state.books}
             handleBorrow={this.handleBorrow.bind(this)}
-            borrowedbook={this.state.user.borrowedbooks.length === 1 ? this.state.user.borrowedbooks[0] : null}
+            borrowedbook={
+              this.state.user.borrowedbooks.length === 1
+                ? this.state.user.borrowedbooks[0]
+                : null
+            }
           />
         ) : null}
       </div>

@@ -9,10 +9,8 @@
   color: white;
 }
 
-.Jumbo {
-  background: #343a40;
-  margin-top: 1rem;
-  padding: 1rem 1rem;
+.Login-button {
+  margin-top: 0.4rem;
 }
 
 .App-link {

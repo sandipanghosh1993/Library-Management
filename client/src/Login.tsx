@@ -1,6 +1,5 @@
 import React from 'react';
 import { Jumbotron, Container, Button, Form } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
 const ROOT_URL = 'http://localhost:8000';
@@ -54,6 +53,7 @@ class Login extends React.Component<LoginProps, LoginState> {
               }}
             />
             <Button
+              className="Login-button"
               type="submit"
               variant="secondary"
               onClick={this.handleLogin.bind(this)}
