@@ -1,15 +1,20 @@
 import React from 'react';
-import { Jumbotron, Container, Table } from 'react-bootstrap';
+import { Jumbotron, Container, Table, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 
-interface AppProps {
+const ROOT_URL = 'http://localhost:8000';
+
+interface BookTableProps {
   books: any[];
+  handleBorrow: Function;
+  disabled: boolean;
 }
 
-interface AppState {}
+interface BookTableState {}
 
-class BookTable extends React.Component<AppProps, AppState> {
-  public constructor(props: AppProps) {
+class BookTable extends React.Component<BookTableProps, BookTableState> {
+  public constructor(props: BookTableProps) {
     super(props);
     this.state = {};
   }
@@ -34,6 +39,19 @@ class BookTable extends React.Component<AppProps, AppState> {
                       <td>{index + 1}</td>
                       <td>{book.title}</td>
                       <td>{book.author}</td>
+                      <td>
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          disabled={this.props.disabled}
+                          onClick={() => {
+                            this.props.handleBorrow(book);
+                          }}
+                        >
+                          {' '}
+                          Borrow
+                        </Button>
+                      </td>
                     </tr>
                   );
                 })}

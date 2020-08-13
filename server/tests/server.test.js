@@ -4,15 +4,37 @@ const {app} = require('./../server');
 const {Book} = require('./../models/book');
 
 describe('GET /books', () => {
-  const books = [
-	  {title: "Song of Solomon", author: "Toni Morrison"},
-	  {title: "Ulysses", author: "James Joyce"}
-	 ];
-
-  it('should get request', (done) => {
+  it('should fetch books', (done) => {
     request(app)
       .get('/books')
-      .send(books)
+      .send({})
+      .expect(200)
+      .end(done);
+  });
+});
+
+describe('POST /user', () => {
+  it('should fetch user', (done) => {
+    request(app)
+      .post('/user')
+      .send({userId: "1234"})
+      .expect(200)
+      .end(done);
+  });
+});
+
+describe('POST /borrow', () => {
+  const data = {
+  	userId: "1235",
+  	book: {
+  		 title: "Song of Solomon",
+       author: "Toni Morrison"
+  	}
+  };
+  it('should borrow a book', (done) => {
+    request(app)
+      .post('/borrow')
+      .send(data)
       .expect(200)
       .end(done);
   });

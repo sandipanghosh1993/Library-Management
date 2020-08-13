@@ -10,9 +10,4 @@ describe('App', () => {
   it('should render correct header text', () => {
     expect(screen.getByText('Welcome to town library')).toBeInTheDocument();
   });
-
-  it('should render correct display button', () => {
-    expect(screen.getByRole('button')).toBeInTheDocument();
-    expect(screen.getByText('Display Available Books')).toBeInTheDocument();
-  });
 });

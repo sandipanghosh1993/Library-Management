@@ -1,4 +1,5 @@
-require('../config/config');
+process.env.PORT = 8000;
+process.env.MONGODB_URI = 'mongodb://localhost:27017/LibraryTest';
 const {mongoose} = require('../db/mongoose');
 const {Book} = require('../models/book');
 

@@ -9,7 +9,9 @@ describe('BookTable', () => {
         { title: 'Song of Solomon', author: 'Toni Morrison' },
         { title: 'Ulysses', author: 'James Joyce' }
       ];
-      render(<BookTable books={books} />);
+      render(
+        <BookTable books={books} disabled={false} handleBorrow={() => {}} />
+      );
     });
 
     it('should render a table', () => {
@@ -32,7 +34,9 @@ describe('BookTable', () => {
   describe('Without books', () => {
     beforeEach(() => {
       const books: any = [];
-      render(<BookTable books={books} />);
+      render(
+        <BookTable books={books} disabled={false} handleBorrow={() => {}} />
+      );
     });
 
     it('should render No Books Available text', () => {
