@@ -4,7 +4,7 @@ require('./db/mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const {Book} = require('./models/book');
+const {Book, findAllBook} = require('./models/book');
 const {User} = require('./models/user');
 
 const app=express();
@@ -22,15 +22,7 @@ app.use((req, res, next) => {
 });
 
 app.get('/books', (request, response) => {
-  Book.find({}, (err, data) => {
-    if(err) {
-      response.status(500).send('Error while fetching book');
-    }
-    response.status(200).send({
-      success: true,
-      books: data
-    });
-  });
+  findAllBook(response);
 });
 
 app.post('/user', (request, response) => {
@@ -51,22 +43,25 @@ app.post('/borrow', (request, response) => {
       response.status(500).send('Error while fetching user');
     }
     user.borrowedbooks = [...user.borrowedbooks, request.body.book];
-    user.save().then(doc => {
-      Book.deleteOne({title: request.body.book.title}, err => {
-        if(err) {
-          response.status(500).send('Error while deleting book');
-        }
-        Book.find({}, (err, books) => {
+    user.save().then(userdoc => {
+      if(request.body.book.noofcopy > 1) {
+        Book.findOne({title: request.body.book.title}, (err, book) => {
           if(err) {
             response.status(500).send('Error while fetching book');
           }
-          response.status(200).send({
-            success: true,
-            books: books,
-            user: doc
+          book.noofcopy -= 1;
+          book.save().then(bookdoc => {
+            findAllBook(response, userdoc);
           });
         });
-      });
+      } else {
+        Book.deleteOne({title: request.body.book.title}, err => {
+          if(err) {
+            response.status(500).send('Error while deleting book');
+          }
+          findAllBook(response, userdoc);
+        });
+      }
     });
   });
 });

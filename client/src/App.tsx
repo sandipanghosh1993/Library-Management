@@ -88,6 +88,7 @@ class App extends React.Component<AppProps, AppState> {
             disabled={this.state.user.borrowedbooks.length === 2}
             books={this.state.books}
             handleBorrow={this.handleBorrow.bind(this)}
+            borrowedbook={this.state.user.borrowedbooks.length === 1 ? this.state.user.borrowedbooks[0] : null}
           />
         ) : null}
       </div>

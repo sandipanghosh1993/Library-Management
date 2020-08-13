@@ -9,6 +9,7 @@ interface BookTableProps {
   books: any[];
   handleBorrow: Function;
   disabled: boolean;
+  borrowedbook: any;
 }
 
 interface BookTableState {}
@@ -30,6 +31,7 @@ class BookTable extends React.Component<BookTableProps, BookTableState> {
                   <th>#</th>
                   <th>Title</th>
                   <th>Author</th>
+                  <th>No. of Copy</th>
                 </tr>
               </thead>
               <tbody>
@@ -39,11 +41,12 @@ class BookTable extends React.Component<BookTableProps, BookTableState> {
                       <td>{index + 1}</td>
                       <td>{book.title}</td>
                       <td>{book.author}</td>
+                      <td>{book.noofcopy}</td>
                       <td>
                         <Button
                           variant="secondary"
                           size="sm"
-                          disabled={this.props.disabled}
+                          disabled={this.props.disabled || this.props.borrowedbook?.title === book.title}
                           onClick={() => {
                             this.props.handleBorrow(book);
                           }}
