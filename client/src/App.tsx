@@ -3,8 +3,8 @@ import { Button, Popover, Col } from 'react-bootstrap';
 import BookTable from './BookTable';
 import Login from './Login';
 import BorrowBook from './BorrowBook';
-import './App.css';
 import axios from 'axios';
+import './App.css';
 
 const ROOT_URL = 'http://localhost:8000';
 

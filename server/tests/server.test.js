@@ -39,3 +39,20 @@ describe('POST /borrow', () => {
       .end(done);
   });
 });
+
+describe('POST /return', () => {
+  const data = {
+  	userId: "1235",
+  	book: {
+  		 title: "Song of Solomon",
+       author: "Toni Morrison"
+  	}
+  };
+  it('should return a book', (done) => {
+    request(app)
+      .post('/return')
+      .send(data)
+      .expect(200)
+      .end(done);
+  });
+});
