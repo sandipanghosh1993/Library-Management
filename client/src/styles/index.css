@@ -17,3 +17,13 @@ code {
   margin-top: 1rem;
   padding: 1rem 1rem !important;
 }
+
+.Login-button {
+  margin-top: 0.4rem;
+}
+
+.outerdiv {
+  height: 68vh;
+  overflow-y: scroll;
+  margin-top: 1rem;
+}

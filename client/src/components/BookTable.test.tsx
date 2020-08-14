@@ -40,7 +40,12 @@ describe('BookTable', () => {
     beforeEach(() => {
       const books: any = [];
       render(
-        <BookTable books={books} disabled={false} borrowedbook={{}} handleBorrow={() => {}} />
+        <BookTable
+          books={books}
+          disabled={false}
+          borrowedbook={{}}
+          handleBorrow={() => {}}
+        />
       );
     });
 

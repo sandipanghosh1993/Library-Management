@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button, Popover, Col } from 'react-bootstrap';
+import { Button, Popover } from 'react-bootstrap';
 import BookTable from './BookTable';
 import Login from './Login';
 import BorrowBook from './BorrowBook';
 import axios from 'axios';
-import './App.css';
+import '../styles/App.css';
 
 const ROOT_URL = 'http://localhost:8000';
 
@@ -81,7 +81,7 @@ class App extends React.Component<{}, AppState> {
         ) : (
           <React.Fragment>
             <h2>Hello {this.state.user?.name}!</h2>
-            <Col>
+            <div>
               <Button
                 variant="secondary"
                 size="lg"
@@ -93,7 +93,7 @@ class App extends React.Component<{}, AppState> {
                 user={this.state.user}
                 handleReturn={this.handleReturn.bind(this)}
               />
-            </Col>
+            </div>
           </React.Fragment>
         )}
         {this.state.renderTable ? (
