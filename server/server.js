@@ -42,7 +42,9 @@ app.post('/borrow', (request, response) => {
     if(err) {
       response.status(500).send('Error while fetching user');
     }
-    user.borrowedbooks = [...user.borrowedbooks, request.body.book];
+    const bookAdded = {...request.body.book};
+    bookAdded['noofcopy'] = 1;
+    user.borrowedbooks = [...user.borrowedbooks, bookAdded];
     user.save().then(userdoc => {
       if(request.body.book.noofcopy > 1) {
         Book.findOne({title: request.body.book.title}, (err, book) => {

@@ -1,6 +1,8 @@
-require('../config/config');
+process.env.PORT = 8000;
+process.env.MONGODB_URI = 'mongodb://localhost:27017/LibraryTest';
 const {mongoose} = require('../db/mongoose');
 const {Book} = require('../models/book');
+const {User} = require('../models/user');
 
 const bookList = [
   {title: "The Lord of the Rings", author: "J.R.R. Tolkien", noofcopy: 1},
@@ -15,14 +17,20 @@ const bookList = [
   {title: "Gravity’s Rainbow", author: "Thomas Pynchon", noofcopy: 2},
 ];
 
-Book.remove({}, () => {
-  mongoose.connection.close();
-});
+const userList = [
+  {userId: "1234", name: "Harry", phoneNo: 9878765654, borrowedbooks: []},
+  {userId: "1235", name: "John", phoneNo: 9874455654, borrowedbooks: []},
+  {userId: "1236", name: "Ron", phoneNo: 9867646454, borrowedbooks: []}
+];
 
 Book.insertMany(bookList).then(() => {
-    console.log('Data inserted!');
-    mongoose.connection.close();
+    console.log('Test Book Data inserted!');
 }).catch(error => {
     console.log(error);
-    mongoose.connection.close();
+});
+
+User.insertMany(userList).then(() => {
+    console.log('Test User Data inserted!');
+}).catch(error => {
+    console.log(error);
 });
